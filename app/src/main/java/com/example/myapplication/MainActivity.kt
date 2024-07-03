@@ -1,7 +1,10 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -31,16 +34,33 @@ class MainActivity : AppCompatActivity() {
         //-> khơi tạo list từ mảng string trong file string.xml
 
 
-         val list = mutableListOf<String>() //khởi tạo mutableList
+        val list = mutableListOf<String>() //khởi tạo mutableList
 
         list.add("English")
         list.add("Vietnamese")
         list.add("Chinese")
-
+        //khai báo điều hướng
         val adt = ArrayAdapter(this, android.R.layout.simple_spinner_item, list)
 
+        //goi spinner
+        binding.spLanguage.adapter = adt
 
-        binding.spLanguage.adapter=adt
+        binding.spLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(this@MainActivity, "You choose: ${list[position]}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
 
     }
 }
